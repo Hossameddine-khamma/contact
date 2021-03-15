@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello DefaultController!{% endblock %}
+{% block title %}Hello UsersController!{% endblock %}
 
 {% block body %}
 <!-- component -->
@@ -12,76 +12,18 @@
                 <div class="w-full flex">
                     <div class="m-2 p-1 w-3/4 bg-white flex border border-gray-200 rounded">
                         <div class="flex flex-auto flex-wrap"></div>
-                        <input placeholder="Search by position" class="p-1 px-2 appearance-none outline-none w-full text-gray-800">
+                        <input placeholder="chercher un contact" class="p-1 px-2 appearance-none outline-none w-full text-gray-800">
                         
                     </div>
                     <div class="text-gray-300 w-1/4 m-2 flex items-center">
                             <button class="cursor-pointer w-full rounded h-7 text-white bg-red-500 outline-none focus:outline-none">
-                                Nouveau
+                                Se connecter
                             </button>
-                    </div>
-                </div>
-                <div class="flex bg-white w-full border justify-center ">
-                    <button class="flex w-8/12 xsm:w-6/12 sm:w-5/12 md:w-4/12 xl:w-3/12 m-2 justify-center focus:outline-none" >
-                      <img class="w-1/12 h-4/6 mt-1 mx-4" src="{{ asset('build/img/setings.png') }}">
-                      <a >FILTRER</a>
-                      <img class="w-2/12 lg:w-1/12 h-3/6 mt-2 mx-2 px-2" src="{{ asset('build/img/dropdown.png') }}">  
-                    </button>
-                </div>
-                <div class="absolute shadow bg-white top-100 z-40 w-full lef-0 rounded max-h-select overflow-y-auto svelte-5uyqqj">
-                    <div class="flex flex-col w-full">
-                        <div class="cursor-pointer w-full border-gray-100 rounded-t border-b hover:bg-teal-100">
-                            <div class="flex w-full items-center p-2 pl-2 border-transparent border-l-2 relative hover:border-teal-100">
-                                <div class="w-6 flex flex-col items-center">
-                                    <div class="flex relative w-5 h-5 bg-orange-500 justify-center items-center m-1 mr-2 w-4 h-4 mt-1 rounded-full "><img class="rounded-full" alt="A" src="https://randomuser.me/api/portraits/men/62.jpg"> </div>
-                                </div>
-                                <div class="w-full items-center flex">
-                                    <div class="mx-2 -mt-1  ">Jack jhon
-                                        <div class="text-xs truncate w-full normal-case font-normal -mt-1 text-gray-500">CEO &amp; managin director</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="cursor-pointer w-full border-gray-100 border-b hover:bg-teal-100">
-                            <div class="flex w-full items-center p-2 pl-2 border-transparent border-l-2 relative hover:border-teal-100">
-                                <div class="w-6 flex flex-col items-center">
-                                    <div class="flex relative w-5 h-5 bg-orange-500 justify-center items-center m-1 mr-2 w-4 h-4 mt-1 rounded-full "><img class="rounded-full" alt="A" src="https://randomuser.me/api/portraits/women/62.jpg"> </div>
-                                </div>
-                                <div class="w-full items-center flex">
-                                    <div class="mx-2 -mt-1  ">Liza Blue
-                                        <div class="text-xs truncate w-full normal-case font-normal -mt-1 text-gray-500">COO &amp; co-founder</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="cursor-pointer w-full border-gray-100 border-b hover:bg-teal-100">
-                            <div class="flex w-full items-center p-2 pl-2 border-transparent border-l-2 relative hover:border-teal-100">
-                                <div class="w-6 flex flex-col items-center">
-                                    <div class="flex relative w-5 h-5 bg-orange-500 justify-center items-center m-1 mr-2 w-4 h-4 mt-1 rounded-full "><img class="rounded-full" alt="A" src="https://randomuser.me/api/portraits/men/65.jpg"> </div>
-                                </div>
-                                <div class="w-full items-center flex">
-                                    <div class="mx-2 -mt-1 w-1/2 ">Brian White
-                                        <div class="text-xs truncate w-full normal-case font-normal -mt-1 text-gray-500">CTO &amp; technical manager</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="cursor-pointer w-full border-gray-100 rounded-b hover:bg-teal-100">
-                            <div class="flex w-full items-center p-2 pl-2 border-transparent border-l-2 relative hover:border-teal-100">
-                                <div class="w-6 flex flex-col items-center">
-                                    <div class="flex relative w-5 h-5 bg-orange-500 justify-center items-center m-1 mr-2 w-4 h-4 mt-1 rounded-full "><img class="rounded-full" alt="A" src="https://randomuser.me/api/portraits/men/85.jpg"> </div>
-                                </div>
-                                <div class="w-full items-center flex">
-                                    <div class="mx-2 -mt-1  ">Eric Dripper
-                                        <div class="text-xs truncate w-full normal-case font-normal -mt-1 text-gray-500">CMO &amp; marketing manager</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 {% endblock %}
