@@ -7,9 +7,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=UsersRepository::class)
+ * @UniqueEntity(fields={"email"}, message="l'email que vous avez indiqué est deja utilisé")
  */
 class Users implements UserInterface
 {
@@ -35,6 +38,11 @@ class Users implements UserInterface
      * @ORM\Column(type="string")
      */
     private $password;
+
+    /**
+     * @Assert\EqualTo(propertyPath = "password", message="veuillez saisir le même mot de passe")
+     */
+    public $confirm_password;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -67,7 +75,7 @@ class Users implements UserInterface
     private $Tags;
 
     /**
-     * @ORM\OneToMany(targetEntity=contacts::class, mappedBy="user", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Contacts::class, mappedBy="user", orphanRemoval=true)
      */
     private $Contacts;
 
