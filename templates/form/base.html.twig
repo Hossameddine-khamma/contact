@@ -74,12 +74,16 @@
 {% block button_widget -%}
      {%- if attr.forgotten is not defined  -%}
         <div class="submit flex justify-end">
-            {%- set attr = attr|merge({class: (attr.class|default('bg-cyan text-black text-sm rounded-md px-3 py-1 mr-10'))|trim}) -%}
+            {%- set attr = attr|merge({class: (attr.class|default('mt-3 text-lg font-semibold 
+                            bg-red-500 w-full text-white rounded-lg
+                            px-6 py-3 block shadow-xl hover:bg-red-700'))|trim}) -%}
             {{- parent() -}}
         </div>
     {%- elseif attr.forgotten is same as(true) -%}
         <div class="submit flex justify-end">
-            {%- set attr = attr|merge({class: (attr.class|default('bg-cyan text-black text-sm rounded-md px-3 py-1 mr-10'))|trim}) -%}
+            {%- set attr = attr|merge({class: (attr.class|default('mt-3 text-lg font-semibold 
+                            bg-red-500 w-full text-white rounded-lg
+                            px-6 py-3 block shadow-xl hover:bg-red-700'))|trim}) -%}
             {{- parent() -}}
             <a class="text-black" href="">
                 Forgot Password?
