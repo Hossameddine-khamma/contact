@@ -17,6 +17,9 @@
             <div class="relative flex flex-wrap">
               <div class="w-full relative">
                 <div class="mt-6">
+                    {% for message in app.flashes('message')%}
+                        <h1 class="text-green-500 font-bold my-4 justify-items-center grid">{{message}}</h1>        
+                    {% endfor %}
                     <h1 class="text-gray-600 font-bold my-4 justify-items-center grid">Please sign in</h1>
                     <form method="post" class="mt-8">
                         <div class="py-2">

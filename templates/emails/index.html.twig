@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello UsersController!{% endblock %}
+
+{% block body %}
+<!-- component -->
+
+        <a href="{{absolute_url(path('activation',{'token': token }))}}"> activer le compte </a>
+
+{% endblock %}

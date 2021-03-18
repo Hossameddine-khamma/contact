@@ -79,6 +79,11 @@ class Users implements UserInterface
      */
     private $Contacts;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $activation_token;
+
     public function __construct()
     {
         $this->Contacts = new ArrayCollection();
@@ -263,6 +268,18 @@ class Users implements UserInterface
                 $contact->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getActivationToken(): ?string
+    {
+        return $this->activation_token;
+    }
+
+    public function setActivationToken(?string $activation_token): self
+    {
+        $this->activation_token = $activation_token;
 
         return $this;
     }
