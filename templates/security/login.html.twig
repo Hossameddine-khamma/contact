@@ -20,6 +20,9 @@
                     {% for message in app.flashes('message')%}
                         <h1 class="text-green-500 font-bold my-4 justify-items-center grid">{{message}}</h1>        
                     {% endfor %}
+                    {% for message in app.flashes('danger')%}
+                        <h1 class="text-red-500 font-bold my-4 justify-items-center grid">{{message}}</h1>        
+                    {% endfor %}
                     <h1 class="text-gray-600 font-bold my-4 justify-items-center grid">Please sign in</h1>
                     <form method="post" class="mt-8">
                         <div class="py-2">
@@ -50,6 +53,11 @@
                             <label class="block text-gray-500 font-bold my-4">
                                 <input type="checkbox" name="_remember_me" class="leading-loose text-pink-600">
                                 <span class="py-2 text-sm text-gray-600 leading-snug">Remember me</span>
+                            </label>
+                            <label class="block text-gray-500 font-bold my-4">
+                                <a href="{{path('oubliePass')}}" class="cursor-pointer tracking-tighter text-black border-b-2 border-gray-200 hover:border-gray-400">
+                                    <span>Forgot Password?</span>
+                                </a>
                             </label>
                         </div>
                         {% if error %}
