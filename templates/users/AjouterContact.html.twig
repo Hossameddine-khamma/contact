@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un contact{% endblock %}
+{% block javascripts %}
+            {{ encore_entry_script_tags('contact') }}
+{% endblock %}
+
+{% block body %}
+<div class="container max-w-full mx-auto py-24 px-6">
+    <div class="font-sans">
+        <div class="max-w-sm mx-auto px-6">
+            <div class="relative flex flex-wrap">
+              <div class="w-full relative">
+                <div class="mt-6">
+                    <h1 class="text-gray-600 font-bold my-4 justify-items-center grid">veuillez ajouter votre contact</h1>
+                    {{ form(contactform) }}
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>    
+    
+{% endblock %}
+
