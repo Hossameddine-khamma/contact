@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Entity\Users;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use League\OAuth2\Client\Provider\LinkedInResourceOwner;
+use League\OAuth2\Client\Provider\ResourceOwnerInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -34,6 +36,31 @@ class UsersRepository extends ServiceEntityRepository implements PasswordUpgrade
         $user->setPassword($newEncodedPassword);
         $this->_em->persist($user);
         $this->_em->flush();
+    }
+
+    public function findOrCreateFromOauth(LinkedInResourceOwner $Owner){
+
+        $user= $this->createQueryBuilder('u')
+        ->where('u.linkedinID = :linkedinId')
+        ->setParameters([
+            'linkedinId' => $Owner->getId()
+        ])
+        ->getQuery()
+        ->getOneOrNullResult();
+        if($user){
+            return $user;
+        }
+        $user=(new Users())
+        ->setLinkedinID($Owner->getId())
+        ->setEmail($Owner->getEmail())
+        ->setNom($Owner->getFirstName())
+        ->setPrenom($Owner->getLastName());
+
+        $em=$this->getEntityManager();
+        $em->persist($user);
+        $em->flush();
+
+        return $user;
     }
 
     // /**

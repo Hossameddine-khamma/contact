@@ -63,4 +63,13 @@ class DefaultController extends AbstractController
             'form'=> $form->createView()
         ]);
     }
+
+    /**
+     * @Route("/rien", name="rien")
+     */
+    public function rien(): Response
+    {
+        return $this->render('default/rien.html.twig');
+    }
+
 }

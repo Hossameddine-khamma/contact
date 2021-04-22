@@ -1,0 +1,10 @@
+knpu_oauth2_client:
+    clients:
+        linkedin:
+            type: linkedin
+            client_id: '%env(linkedin_ID)%'
+            client_secret: '%env(linkedin_Secret)%'
+            redirect_route: oauth_check
+            redirect_params:
+                    service: linkedin
+        # configure your clients as described here: https://github.com/knpuniversity/oauth2-client-bundle#configuration

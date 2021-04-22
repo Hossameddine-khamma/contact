@@ -35,7 +35,7 @@ class Users implements UserInterface
 
     /**
      * @var string The hashed password
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string" , nullable=true)
      */
     private $password;
 
@@ -88,6 +88,11 @@ class Users implements UserInterface
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $reset_token;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $linkedinID;
 
     public function __construct()
     {
@@ -143,9 +148,9 @@ class Users implements UserInterface
     /**
      * @see UserInterface
      */
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
-        return (string) $this->password;
+        return $this->password;
     }
 
     public function setPassword(string $password): self
@@ -297,6 +302,18 @@ class Users implements UserInterface
     public function setResetToken(?string $reset_token): self
     {
         $this->reset_token = $reset_token;
+
+        return $this;
+    }
+
+    public function getLinkedinID(): ?string
+    {
+        return $this->linkedinID;
+    }
+
+    public function setLinkedinID(?string $linkedinID): self
+    {
+        $this->linkedinID = $linkedinID;
 
         return $this;
     }

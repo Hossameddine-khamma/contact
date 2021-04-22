@@ -19,8 +19,10 @@ security:
             lazy: true
             provider: app_user_provider
             guard:
+                entry_point: App\Security\UsersAuthenticator
                 authenticators:
                     - App\Security\UsersAuthenticator
+                    - App\Security\LinkedInAutenticator
             logout:
                 path: app_logout
                 # where to redirect after logout
