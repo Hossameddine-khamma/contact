@@ -5,12 +5,13 @@
 {% block body %}
 <!-- component -->
 
-
         <div class="w-full flex items-center bg-gray-700">
             <div class="w-full flex">
-                <div class="m-2 p-1 w-3/4 bg-white flex border border-gray-200 rounded">
-                    <input placeholder="Search by position" class="p-1 px-2 appearance-none outline-none w-full text-gray-800">
-                    <a class="w-6 my-auto mx-4"><img src="{{ asset('build/img/searche.png') }}"></a>
+                <div class="m-2 w-3/4 bg-white flex border border-gray-200 rounded">
+                    <div class="w-full">
+                    {{ form(loupeForm) }}
+                    </div>
+                    <a id="btnRechercher" class="w-6 my-auto mx-4 cursor-pointer"><img src="{{ asset('build/img/searche.png') }}"></a>
                 </div>
                 <div class="text-gray-300 w-1/4 m-2 flex items-center">
                         <a class="w-10 h-12  mr-4 ml-auto items-center flex " href="{{path('ajouterContact')}}">
@@ -27,13 +28,50 @@
             </div>
         </div>
         <div class="flex bg-white w-full border justify-center ">
-            <button class="flex w-8/12 xsm:w-6/12 sm:w-5/12 md:w-4/12 xl:w-3/12 m-2 justify-center focus:outline-none" >
+            <button id="btnFiltre" class="flex w-8/12 xsm:w-6/12 sm:w-5/12 md:w-4/12 xl:w-3/12 m-2 justify-center focus:outline-none" >
               <img class="w-1/12 h-4/6 mt-1 mx-4" src="{{ asset('build/img/setings.png') }}">
               <a >FILTRER</a>
               <img class="w-2/12 lg:w-1/12 h-3/6 mt-2 mx-2 px-2" src="{{ asset('build/img/dropdown.png') }}">  
             </button>
         </div>
-        <div class="shadow bg-white  w-full lef-0 rounded max-h-select overflow-y-auto svelte-5uyqqj">
+        {{ form_start(filtreForm) }}
+        <div id="filtre" class="hidden my-4">
+            
+            <div  class="grid grid-cols-1 sm:grid-cols-3">
+                <div>
+                    {{form_row(filtreForm.Prenom)}}
+                </div>
+                <div>
+                    {{form_row(filtreForm.Telephone)}}
+                </div>
+                <div>
+                    {{form_row(filtreForm.Metier)}}
+                </div>
+                <div class="sm:col-span-2">
+                    {{form_row(filtreForm.Mail)}}
+                </div>
+                <div>
+                    {{form_row(filtreForm.ville)}}
+                </div>
+                <div>
+                    {{form_row(filtreForm.News)}}
+                </div>
+                <div >
+                    {{form_row(filtreForm.Date)}}
+                </div>
+                <div>
+                    {{form_row(filtreForm.Meteo)}}
+                </div>
+                <div class="sm:col-span-2">
+                    {{form_row(filtreForm.Tags)}}
+                </div>
+                <div class="my-2 mx-4">
+                    {{form_row(filtreForm.Rechercher)}}
+                </div>
+            </div>
+            {{ form_end(filtreForm) }}
+        </div>
+        <div id="contact" class="shadow bg-white  w-full lef-0 rounded max-h-select overflow-y-auto svelte-5uyqqj">
             <div class="flex flex-col w-full">
                 <div class="cursor-pointer w-full border-gray-100 rounded-t border-b hover:bg-teal-100">
                     <div class="flex w-full items-center p-2 pl-2 border-transparent border-l-2 relative hover:border-teal-100">
@@ -41,8 +79,8 @@
                             <div class="flex relative w-5 h-5 bg-orange-500 justify-center items-center m-1 mr-2 w-4 h-4 mt-1 rounded-full "><img class="rounded-full" alt="A" src="https://randomuser.me/api/portraits/men/62.jpg"> </div>
                         </div>
                         <div class="w-full items-center flex">
-                            <div class="mx-2 -mt-1  ">Jack jhon
-                                <div class="text-xs truncate w-full normal-case font-normal -mt-1 text-gray-500">CEO &amp; managin director</div>
+                            <div class="mx-2 -mt-1  ">{{ contact[0].Prenom }}
+                                <div class="text-xs truncate w-full normal-case font-normal -mt-1 text-gray-500">{{ contact[0].Metier }}</div>
                             </div>
                         </div>
                     </div>
@@ -85,4 +123,7 @@
                 </div>
             </div>
         </div>
+{% endblock %}
+{% block javascripts %}
+    {{ encore_entry_script_tags('filtre') }}
 {% endblock %}
