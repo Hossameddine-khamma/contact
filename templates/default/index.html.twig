@@ -4,22 +4,42 @@
 
 {% block body %}
 <!-- component -->
-
-        <div class="w-full bg-gray-700 flex items-center">
-                    <div class="m-2 p-1 w-3/4 h-2/6 bg-white flex border border-gray-200 rounded ">
-                        <input placeholder="chercher un contact" class="p-1 px-2 appearance-none outline-none w-full text-gray-800">
-                        <a class="w-6 mt-1 mx-4"><img src="{{ asset('build/img/searche.png') }}"></a>
-                    </div>
-                    <div class="text-gray-300 w-1/4 m-2 flex items-center">
-                        <button class="hidden sm:block cursor-pointer w-full rounded h-7 text-white bg-red-500 outline-none focus:outline-none" >
-                           <a  href='{{path('app_login')}}'> Se connecter<a/>
-                        </button>
-                        <a class="block sm:hidden w-10 h-12 mx-auto items-center flex">
-                            <button class="cursor-pointer w-full rounded-full p-1 text-white bg-red-500 outline-none focus:outline-none">
-                                    <img src="{{ asset('build/img/user.png') }}">
-                            </button>
-                        </a>
-                    </div>
+<div class="w-full flex items-center bg-gray-700">
+    <div class="w-full flex">
+        <div class="m-2 w-3/4 bg-white flex border border-gray-200 rounded">
+            <div class="w-full">
+            {{ form(loupeForm) }}
+            </div>
+            <a id="btnRechercher" class="w-6 my-auto mx-4 cursor-pointer"><img src="{{ asset('build/img/searche.png') }}"></a>
         </div>
+        {% if app.user is not null %}
+            <div class="text-gray-300 w-1/4 m-2 flex items-center md:bg-red-500 rounded-lg">
+                <a class="w-10 h-12 mr-2 sm:mr-4 ml-auto  items-center flex" href="{{ path('profile',{id : app.user.id})}}">
+                <button class="cursor-pointer w-full rounded-full p-1 text-white bg-red-500 outline-none focus:outline-none">
+                   <img class="md:ml-2 md:mb-1" src="{{ asset('build/img/home.png') }}"><span class="hidden md:grid">Aceuil</span>
+                </button>
+                </a>
+                <a class="w-10 h-12 mr-2 sm:mr-6 items-center flex  " href="{{path('ajouterContact')}}">
+                <button class="cursor-pointer w-full  rounded-full p-1  text-white bg-red-500 outline-none focus:outline-none">
+                    <img class="md:ml-2 md:mb-1" src="{{ asset('build/img/plus.png') }}"> <span class="hidden md:grid">Ajouter</span>
+                </button>
+                </a>
+                <a class="w-10 h-12 mr-auto  items-center flex" href="{{ path('profile',{id : app.user.id})}}">
+                <button class="cursor-pointer w-full md:grid rounded-full p-1 text-white bg-red-500 outline-none focus:outline-none">
+                    <img  src="{{ asset('build/img/user.png') }}"><span class="hidden md:grid">Profil</span>
+                </button>
+                </a>
+            </div>
+        {% else %}
+            <div class="text-gray-300 w-1/4 m-2 flex items-center justify-center md:bg-red-500 rounded-lg">
+                <a class=" h-12 items-center  flex" href="{{ path('app_login')}}">
+                <button class="cursor-pointer w-full flex rounded-full p-1 text-white bg-red-500 outline-none focus:outline-none">
+                    <img class="w-10" src="{{ asset('build/img/user.png') }}"><div class="hidden mt-2 ml-2 w-full md:grid">Se connecter</div>
+                </button>
+                </a>
+            </div>
 
+        {% endif %}
+    </div>
+</div>
 {% endblock %}
