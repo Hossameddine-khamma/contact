@@ -13,15 +13,20 @@
                     </div>
                     <a id="btnRechercher" class="w-6 my-auto mx-4 cursor-pointer"><img src="{{ asset('build/img/searche.png') }}"></a>
                 </div>
-                <div class="text-gray-300 w-1/4 m-2 flex items-center">
-                        <a class="w-10 h-12  mr-4 ml-auto items-center flex " href="{{path('ajouterContact')}}">
-                        <button class="cursor-pointer w-full rounded-full p-1  text-white bg-red-500 outline-none focus:outline-none">
-                            <img src="{{ asset('build/img/plus.png') }}">
+                <div class="text-gray-300 w-1/4 m-2 flex items-center md:bg-red-500 rounded-lg">
+                        <a class="w-10 h-12 mr-2 sm:mr-4 ml-auto  items-center flex" href="{{ path('profile',{id : app.user.id})}}">
+                        <button class="cursor-pointer w-full rounded-full p-1 text-white bg-red-500 outline-none focus:outline-none">
+                           <img class="md:ml-2 md:mb-1" src="{{ asset('build/img/home.png') }}"><span class="hidden md:grid">Acueil</span>
                         </button>
                         </a>
-                        <a class="w-10 h-12 ml-4 mr-auto  items-center flex">
-                        <button class="cursor-pointer w-full rounded-full p-1 text-white bg-red-500 outline-none focus:outline-none">
-                           <img src="{{ asset('build/img/user.png') }}">
+                        <a class="w-10 h-12 mr-2 sm:mr-6 items-center flex  " href="{{path('ajouterContact')}}">
+                        <button class="cursor-pointer w-full  rounded-full p-1  text-white bg-red-500 outline-none focus:outline-none">
+                            <img class="md:ml-2 md:mb-1" src="{{ asset('build/img/plus.png') }}"> <span class="hidden md:grid">Ajouter</span>
+                        </button>
+                        </a>
+                        <a class="w-10 h-12 mr-auto  items-center flex" href="{{ path('profile',{id : app.user.id})}}">
+                        <button class="cursor-pointer w-full md:grid rounded-full p-1 text-white bg-red-500 outline-none focus:outline-none">
+                            <img  src="{{ asset('build/img/user.png') }}"><span class="hidden md:grid">Profil</span>
                         </button>
                         </a>
                 </div>
@@ -73,54 +78,41 @@
         </div>
         <div id="contact" class="shadow bg-white  w-full lef-0 rounded max-h-select overflow-y-auto svelte-5uyqqj">
             <div class="flex flex-col w-full">
-                <div class="cursor-pointer w-full border-gray-100 rounded-t border-b hover:bg-teal-100">
-                    <div class="flex w-full items-center p-2 pl-2 border-transparent border-l-2 relative hover:border-teal-100">
-                        <div class="w-6 flex flex-col items-center">
-                            <div class="flex relative w-5 h-5 bg-orange-500 justify-center items-center m-1 mr-2 w-4 h-4 mt-1 rounded-full "><img class="rounded-full" alt="A" src="https://randomuser.me/api/portraits/men/62.jpg"> </div>
-                        </div>
-                        <div class="w-full items-center flex">
-                            <div class="mx-2 -mt-1  ">{{ contact[0].Prenom }}
-                                <div class="text-xs truncate w-full normal-case font-normal -mt-1 text-gray-500">{{ contact[0].Metier }}</div>
+                {% for contact in contacts %}
+                    <div class="cursor-pointer w-full border-gray-100 rounded-t border-b hover:bg-teal-100">
+                        <div class="flex w-full items-center p-2 pl-2 border-transparent border-l-2 relative hover:border-teal-100">
+                            <div class="w-6 flex flex-col items-center">
+                                <div class="flex relative w-5 h-5 bg-orange-500 justify-center items-center m-1 mr-2 w-4 h-4 mt-1 rounded-full "><img class="rounded-full" alt="A" src="https://randomuser.me/api/portraits/men/62.jpg"> </div>
                             </div>
+                                <div class="w-full items-center flex flex-wrap">
+                                    <div class="mx-6 sm:mx-2 -mt-1  ">{{ contact.Nom }} {{ contact.Prenom }}
+                                        <div class="text-xs truncate w-full normal-case font-normal -mt-1 text-gray-500">{{ contact.Metier }}</div>
+                                    </div>
+                                    <div class="mx-6 -mt-1  ">
+                                        <div class="text-xs truncate w-full normal-case font-normal mt-5 text-gray-500 ">{{ contact.Mail }}</div>
+                                    </div>
+                                    <div class="mx-6 -mt-1  ">
+                                        <div class="text-xs truncate w-full normal-case font-normal mt-5 text-gray-500 ">{{ contact.Telephone }}</div>
+                                    </div>
+                                    <div class="mx-6 -mt-1  ">
+                                        <div class="text-xs truncate w-full normal-case font-normal mt-5 text-gray-500 hidden lg:block">{{ contact.Ville }}</div>
+                                    </div>
+                                    <div class="mx-6 -mt-1  ">
+                                        <div class="text-xs truncate w-full normal-case font-normal mt-5 text-gray-500 hidden lg:block">{{ contact.Tags }}</div>
+                                    </div>
+                                    <div class="mx-6 -mt-1  ">
+                                        <div class="text-xs truncate w-full normal-case font-normal mt-5 text-gray-500 hidden lg:block">{{ contact.News }}</div>
+                                    </div>
+                                    <div class="mx-6 -mt-1  ">
+                                        <div class="text-xs truncate w-full normal-case font-normal mt-5 text-gray-500 hidden lg:block">{{ contact.Meteo }}</div>
+                                    </div>
+                                    <div class="mx-6 -mt-1  ">
+                                        <div class="text-xs truncate w-full normal-case font-normal mt-5 text-gray-500 hidden lg:block">{{ contact.Date|date("m/d/Y") }}</div>
+                                    </div>
+                                </div>
                         </div>
                     </div>
-                </div>
-                <div class="cursor-pointer w-full border-gray-100 border-b hover:bg-teal-100">
-                    <div class="flex w-full items-center p-2 pl-2 border-transparent border-l-2 relative hover:border-teal-100">
-                        <div class="w-6 flex flex-col items-center">
-                            <div class="flex relative w-5 h-5 bg-orange-500 justify-center items-center m-1 mr-2 w-4 h-4 mt-1 rounded-full "><img class="rounded-full" alt="A" src="https://randomuser.me/api/portraits/women/62.jpg"> </div>
-                        </div>
-                        <div class="w-full items-center flex">
-                            <div class="mx-2 -mt-1  ">Liza Blue
-                                <div class="text-xs truncate w-full normal-case font-normal -mt-1 text-gray-500">COO &amp; co-founder</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="cursor-pointer w-full border-gray-100 border-b hover:bg-teal-100">
-                    <div class="flex w-full items-center p-2 pl-2 border-transparent border-l-2 relative hover:border-teal-100">
-                        <div class="w-6 flex flex-col items-center">
-                            <div class="flex relative w-5 h-5 bg-orange-500 justify-center items-center m-1 mr-2 w-4 h-4 mt-1 rounded-full "><img class="rounded-full" alt="A" src="https://randomuser.me/api/portraits/men/65.jpg"> </div>
-                        </div>
-                        <div class="w-full items-center flex">
-                            <div class="mx-2 -mt-1 w-1/2 ">Brian White
-                                <div class="text-xs truncate w-full normal-case font-normal -mt-1 text-gray-500">CTO &amp; technical manager</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="cursor-pointer w-full border-gray-100 rounded-b hover:bg-teal-100">
-                    <div class="flex w-full items-center p-2 pl-2 border-transparent border-l-2 relative hover:border-teal-100">
-                        <div class="w-6 flex flex-col items-center">
-                            <div class="flex relative w-5 h-5 bg-orange-500 justify-center items-center m-1 mr-2 w-4 h-4 mt-1 rounded-full "><img class="rounded-full" alt="A" src="https://randomuser.me/api/portraits/men/85.jpg"> </div>
-                        </div>
-                        <div class="w-full items-center flex">
-                            <div class="mx-2 -mt-1  ">Eric Dripper
-                                <div class="text-xs truncate w-full normal-case font-normal -mt-1 text-gray-500">CMO &amp; marketing manager</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
 {% endblock %}

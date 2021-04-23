@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Contacts;
+use App\Entity\Users;
 use App\Form\ContactType;
 use App\Form\FilterType;
 use App\Form\loupeType;
 use App\Repository\ContactsRepository;
+use App\Repository\UsersRepository;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,19 +34,32 @@ class UsersController extends AbstractController
 
         if($loupeForm->isSubmitted() && $loupeForm->isValid() ){
 
-        $contact=$contactsRepo->filtre($filtreForm->getData(),$loupeForm->getData());
-        }
-        
-        if($filtreForm->isSubmitted() && $filtreForm->isValid() ){
-
-            $contact=$contactsRepo->filtre($filtreForm->getData(),$loupeForm->getData());
-        }
-
+        $contacts=$contactsRepo->filtre($filtreForm->getData(),$loupeForm->getData());
         return $this->render('users/index.html.twig', [
             'controller_name' => 'UsersController',
             'filtreForm'=> $filtreForm->createView(),
             'loupeForm'=>$loupeForm->createView(),
-            'contact'=> $contact
+            'contacts'=> $contacts
+        ]);
+        }
+        
+        if($filtreForm->isSubmitted() && $filtreForm->isValid() ){
+
+            $contacts=$contactsRepo->filtre($filtreForm->getData(),$loupeForm->getData());
+            return $this->render('users/index.html.twig', [
+                'controller_name' => 'UsersController',
+                'filtreForm'=> $filtreForm->createView(),
+                'loupeForm'=>$loupeForm->createView(),
+                'contacts'=> $contacts
+            ]);
+        }
+
+        $contacts= $contactsRepo->findAll();
+        return $this->render('users/index.html.twig', [
+            'controller_name' => 'UsersController',
+            'filtreForm'=> $filtreForm->createView(),
+            'loupeForm'=>$loupeForm->createView(),
+            'contacts'=> $contacts
         ]);
     }
 

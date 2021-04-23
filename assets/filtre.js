@@ -1,4 +1,11 @@
+
 $(document).ready(()=>{
+
+    $('#loupe').children('div').removeClass('mb-6')
+    $('#loupe').children('div').addClass('mb-2')
+
+    let div =$('#loupe').children('div')
+    div.children('div').removeClass('mb-6')
     
     $('#btnFiltre').click((e)=>{
         e.preventDefault();
