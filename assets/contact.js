@@ -16,8 +16,6 @@ $(document).ready(()=>{
         lang:'fr'
     }
 
-    console.log('test');
-
     navigator.geolocation.getCurrentPosition(position =>{
         $.get(`https://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${config.api}&units=metric&lang=fr`).then((data)=>{
             console.log(data)
@@ -26,6 +24,16 @@ $(document).ready(()=>{
         })
     });
 
+    $('#localisation').click(()=>{
+        window.location.reload(true);
+        navigator.geolocation.getCurrentPosition(position =>{
+            $.get(`https://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${config.api}&units=metric&lang=fr`).then((data)=>{
+                console.log(data)
+                $("#contact_ville").val(data.name)
+                $("#contact_Meteo").val(data.weather[0].description)
+            })
+        });
+    })
 
 });
 
