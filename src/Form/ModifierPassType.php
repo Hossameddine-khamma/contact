@@ -13,7 +13,6 @@ class ModifierPassType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('MotDePasse',PasswordType::class)
             ->add('NouveauMotDePasse',PasswordType::class)
             ->add('confirmationMotDePasse',PasswordType::class)
             ->add('envoyer',SubmitType::class)
