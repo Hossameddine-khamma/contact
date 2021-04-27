@@ -65,7 +65,16 @@
                       </span>
                       <span class="tracking-wide">About</span>
                       </div>
-                      <a class="ml-auto mr-2 flex cursor-pointer"><img class="ml-auto w-10 p-2"
+                      <a href="{% if app.user is not null  %}
+                                {% if app.user.id == user.Id  %}
+                                    {{ path('modifier')}}
+                                {% elseif pp.user.id != user.Id %}
+                                    
+                                {% endif %}
+                            {% elseif app.user is null %}
+                                
+                            {% endif %}"
+                        class="ml-auto mr-2 flex cursor-pointer"><img class="ml-auto w-10 p-2"
                         src="{% if app.user is not null  %}
                                 {% if app.user.id == user.Id  %}
                                     {{ asset('build/img/edit.png') }}
@@ -129,6 +138,5 @@
 {% endblock %}
 {% block javascripts %}
     {{ encore_entry_script_tags('filtre') }}
-    {{ encore_entry_script_tags('profil') }}
     {{ encore_entry_script_tags('QR') }}
 {% endblock %}

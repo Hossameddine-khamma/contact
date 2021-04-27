@@ -7,6 +7,7 @@ use App\Entity\Users;
 use App\Form\ContactType;
 use App\Form\FilterType;
 use App\Form\loupeType;
+use App\Form\UserEditType;
 use App\Repository\ContactsRepository;
 use App\Repository\UsersRepository;
 use DateTime;
@@ -64,7 +65,7 @@ class UsersController extends AbstractController
     }
 
     /**
-     * @Route("/contact/ajouter", name="ajouterContact")
+     * @Route("/ajouter", name="ajouterContact")
      */
     public function ajouterContact(Request $request): Response
     {
@@ -85,5 +86,20 @@ class UsersController extends AbstractController
         return $this->render('users/AjouterContact.html.twig', [
             'contactform' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/modifier", name="modifier")
+     */
+    public function modifier(Request $request): Response
+    {
+        $user= $this->getUser();
+
+        $editform = $this->createForm(UserEditType::class,$user);
+        return $this->render('users/EditUsers.html.twig', [
+            'editform' => $editform->createView(),
+        ]);
+
+
     }
 }
