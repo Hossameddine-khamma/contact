@@ -27,6 +27,7 @@ Encore
     .addEntry('filtre', './assets/filtre.js')
     .addEntry('contact', './assets/contact.js')
     .addEntry('QR', './assets/jquery.qrcode.min.js')
+    .addEntry('editProfil', './assets/editProfil.js')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')

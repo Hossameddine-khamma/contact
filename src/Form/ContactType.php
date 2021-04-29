@@ -6,6 +6,7 @@ use App\Entity\Contacts;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -23,10 +24,7 @@ class ContactType extends AbstractType
             ->add('Telephone')
             ->add('Metier')
             ->add('ville')
-            ->add('News',ChoiceType::class,[
-                'expanded'=>false,
-                'multiple'=>false
-            ])
+            ->add('News',HiddenType::class)
             ->add('Date',DateType::class,[
                 'widget' => 'single_text'
             ])

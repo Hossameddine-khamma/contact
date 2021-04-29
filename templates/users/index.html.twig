@@ -14,7 +14,7 @@
                     <a id="btnRechercher" class="w-6 my-auto mx-4 cursor-pointer"><img src="{{ asset('build/img/searche.png') }}"></a>
                 </div>
                 <div class="text-gray-300 w-1/4 m-2 flex items-center md:bg-red-500 rounded-lg">
-                        <a class="w-10 h-12 mr-2 sm:mr-4 ml-auto  items-center flex" href="{{ path('profile',{id : app.user.id})}}">
+                        <a class="w-10 h-12 mr-2 sm:mr-4 ml-auto  items-center flex" href="{{ path('users')}}">
                         <button class="cursor-pointer w-full rounded-full p-1 text-white bg-red-500 outline-none focus:outline-none">
                            <img class="md:ml-2 md:mb-1" src="{{ asset('build/img/home.png') }}"><span class="hidden md:grid">Acueil</span>
                         </button>
@@ -79,10 +79,18 @@
         <div id="contact" class="shadow bg-white  w-full lef-0 rounded max-h-select overflow-y-auto svelte-5uyqqj">
             <div class="flex flex-col w-full">
                 {% for contact in contacts %}
+                    <a href="{{ path('contact',{'id':contact.Id}) }}">
                     <div class="cursor-pointer w-full border-gray-100 rounded-t border-b hover:bg-teal-100">
                         <div class="flex w-full items-center p-2 pl-2 border-transparent border-l-2 relative hover:border-teal-100">
                             <div class="w-6 flex flex-col items-center">
-                                <div class="flex relative w-5 h-5 bg-orange-500 justify-center items-center m-1 mr-2 w-4 h-4 mt-1 rounded-full "><img class="rounded-full" alt="A" src="https://randomuser.me/api/portraits/men/62.jpg"> </div>
+                                <div class="flex relative w-5 h-5 bg-orange-500 justify-center items-center m-1 mr-2 w-4 h-4 mt-1 rounded-full ">
+                                    <img class="rounded-full"  
+                                    src="{% if contact.image is null %}
+                                            {{ asset('build/img/profil.jpg') }}
+                                        {% elseif contact.image is not null %}
+                                            {{ vich_uploader_asset(contact, 'imageFile') }}
+                                        {% endif %}"> 
+                                </div>
                             </div>
                                 <div class="w-full items-center flex flex-wrap">
                                     <div class="mx-6 sm:mx-2 -mt-1  ">{{ contact.Nom }} {{ contact.Prenom }}
@@ -104,7 +112,7 @@
                                         <div class="text-xs truncate w-full normal-case font-normal mt-5 text-gray-500 hidden lg:block">{{ contact.News }}</div>
                                     </div>
                                     <div class="mx-6 -mt-1  ">
-                                        <div class="text-xs truncate w-full normal-case font-normal mt-5 text-gray-500 hidden lg:block">{{ contact.Meteo }}</div>
+                                        <div class="text-xs truncate w-full normal-case font-normal mt-5 text-gray-500 hidden lg:block">Meteo : {{ contact.Meteo }}</div>
                                     </div>
                                     <div class="mx-6 -mt-1  ">
                                         <div class="text-xs truncate w-full normal-case font-normal mt-5 text-gray-500 hidden lg:block">{{ contact.Date|date("m/d/Y") }}</div>
@@ -112,6 +120,7 @@
                                 </div>
                         </div>
                     </div>
+                    </a>
                 {% endfor %}
             </div>
         </div>

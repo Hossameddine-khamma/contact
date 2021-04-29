@@ -19,7 +19,7 @@ class ContactsRepository extends ServiceEntityRepository
         parent::__construct($registry, Contacts::class);
     }
 
-        public function filtre ($filtre , $nom){
+        public function filtre ($filtre , $nom , $user){
             if($filtre!=null && $nom == null){
 
                 if($filtre['Nom']== null){
@@ -83,6 +83,7 @@ class ContactsRepository extends ServiceEntityRepository
                 }
 
                 return $this->createQueryBuilder('c')
+                    ->andWhere('c.user = :User')
                     ->andWhere('c.Nom LIKE :Nom')
                     ->andWhere('c.Prenom LIKE :Prenom')
                     ->andWhere('c.Mail LIKE :Mail')
@@ -94,6 +95,7 @@ class ContactsRepository extends ServiceEntityRepository
                     ->andWhere('c.Meteo LIKE :Meteo')
                     ->andWhere('c.Tags LIKE :Tags')
                     ->setParameters([
+                            'User'=>$user,
                             'Nom'=> '%'.$Nom.'%',
                             'Prenom'=> '%'.$Prenom.'%',
                             'Mail'=> '%'.$Mail.'%',
@@ -111,8 +113,10 @@ class ContactsRepository extends ServiceEntityRepository
             }
             if($filtre==null && $nom != null){
                 return $this->createQueryBuilder('c')
+                    ->andWhere('c.user = :User')
                     ->andWhere('c.Nom LIKE :Nom')
                     ->setParameters([
+                            'User'=>$user,
                             'Nom'=> $nom['Nom'],
                     ])
                     ->getQuery()

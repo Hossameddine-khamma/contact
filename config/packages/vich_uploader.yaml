@@ -1,0 +1,12 @@
+vich_uploader:
+    db_driver: orm
+
+    mappings:
+        users:
+            uri_prefix: '%images_users%'
+            upload_destination: '%kernel.project_dir%/public%images_users%'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+        contacts:
+            uri_prefix: '%images_contacts%'
+            upload_destination: '%kernel.project_dir%/public%images_contacts%'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer

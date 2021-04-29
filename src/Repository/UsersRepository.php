@@ -54,7 +54,9 @@ class UsersRepository extends ServiceEntityRepository implements PasswordUpgrade
         ->setLinkedinID($Owner->getId())
         ->setEmail($Owner->getEmail())
         ->setNom($Owner->getFirstName())
-        ->setPrenom($Owner->getLastName());
+        ->setPrenom($Owner->getLastName())
+        ->setImage($Owner->getImageUrl())
+        ->setUpdateAt(new \DateTime('now'));
 
         $em=$this->getEntityManager();
         $em->persist($user);

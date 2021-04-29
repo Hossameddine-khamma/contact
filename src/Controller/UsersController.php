@@ -11,6 +11,7 @@ use App\Form\UserEditType;
 use App\Repository\ContactsRepository;
 use App\Repository\UsersRepository;
 use DateTime;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,7 +36,7 @@ class UsersController extends AbstractController
 
         if($loupeForm->isSubmitted() && $loupeForm->isValid() ){
 
-        $contacts=$contactsRepo->filtre($filtreForm->getData(),$loupeForm->getData());
+        $contacts=$contactsRepo->filtre($filtreForm->getData(),$loupeForm->getData(),$this->getuser()->getId());
         return $this->render('users/index.html.twig', [
             'controller_name' => 'UsersController',
             'filtreForm'=> $filtreForm->createView(),
@@ -46,7 +47,7 @@ class UsersController extends AbstractController
         
         if($filtreForm->isSubmitted() && $filtreForm->isValid() ){
 
-            $contacts=$contactsRepo->filtre($filtreForm->getData(),$loupeForm->getData());
+            $contacts=$contactsRepo->filtre($filtreForm->getData(),$loupeForm->getData(),$this->getuser()->getId());
             return $this->render('users/index.html.twig', [
                 'controller_name' => 'UsersController',
                 'filtreForm'=> $filtreForm->createView(),
@@ -55,7 +56,7 @@ class UsersController extends AbstractController
             ]);
         }
 
-        $contacts= $contactsRepo->findAll();
+        $contacts= $contactsRepo->findBy(['user'=>$this->getuser()->getId()]);
         return $this->render('users/index.html.twig', [
             'controller_name' => 'UsersController',
             'filtreForm'=> $filtreForm->createView(),
@@ -91,15 +92,43 @@ class UsersController extends AbstractController
     /**
      * @Route("/modifier", name="modifier")
      */
-    public function modifier(Request $request): Response
+    public function modifier(Request $request, EntityManagerInterface $em, UsersRepository $usersRepo): Response
     {
-        $user= $this->getUser();
+        $user= $usersRepo->findOneBy(['id' => $this->getUser()->getId()]);
 
         $editform = $this->createForm(UserEditType::class,$user);
+
+        $editform->handleRequest($request);
+
+        if($editform->isSubmitted() && $editform->isValid()){
+            
+            $em->persist($user);
+            $em->flush();
+
+            return $this->redirectToRoute('profile',['id' => $this->getUser()->getId()]);
+        }
+
         return $this->render('users/EditUsers.html.twig', [
             'editform' => $editform->createView(),
         ]);
 
+
+    }
+
+    /**
+     * @Route("/contact/{id}", name="contact")
+     */
+    public function contact($id, Request $request, EntityManagerInterface $em, ContactsRepository $contactsRepo): Response
+    {
+        $contact=$contactsRepo->findOneBy(['id'=>$id]);
+
+        $loupeForm=$this->createForm(loupeType::class);
+
+        return $this->render('users/contact.html.twig', [
+            'loupeForm'=>$loupeForm->createView(),
+                'contact'=> $contact
+
+        ]);
 
     }
 }
