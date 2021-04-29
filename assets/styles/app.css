@@ -7,3 +7,13 @@
     .max-h-select {
         max-height: 300px;
     }
+    @media (max-width: 768px) { 
+        #QR_BG{
+            height: 230%;
+        }
+    }
+    @media (max-width: 640px) { 
+        #QR_BG{
+            height: 210%;
+        }
+    }
