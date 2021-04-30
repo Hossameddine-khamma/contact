@@ -23,7 +23,7 @@ class UsersType extends AbstractType
                 'constraints' => [
 
                     new Regex([
-                        'pattern' => '/^[a-zA-Z0-9_-]+@[a-zA-Z0-9-]{2,}[.][a-zA-Z]{2,3}$/',
+                        'pattern' => '/[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/',
                         'match' => true,
                         'message' => 'veuillez saisir une adresse mail correcte',
                     ]),

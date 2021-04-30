@@ -47,12 +47,20 @@
               <div class="bg-white my-3 px-2">
                   <div class=" flex overflow-hidden">
                       <img class="h-auto w-full mx-auto"
-                          src="{% if user.image is null %}
-                                    {{ asset('build/img/profil.jpg')|imagine_filter('users') }}
-                                {% elseif app.user.linkedinId is not null  %}
-                                    {{ user.image|imagine_filter('users') }}
-                                {% elseif user.image is not null %}
-                                    {{ vich_uploader_asset(user, 'imageFile')|imagine_filter('users') }}
+                          src="{% if app.user is null %}
+                                    {% if user.image is null %}
+                                        {{ asset('build/img/profil.jpg')|imagine_filter('users') }}
+                                    {% elseif user.image is not null %}
+                                        {{ vich_uploader_asset(user, 'imageFile')|imagine_filter('users') }}
+                                    {% endif %}
+                                {% elseif app.user is not null %}
+                                    {% if user.image is null %}
+                                        {{ asset('build/img/profil.jpg')|imagine_filter('users') }}
+                                    {% elseif app.user.linkedinId is not null  %}
+                                        {{ user.image|imagine_filter('users') }}
+                                    {% elseif user.image is not null %}
+                                        {{ vich_uploader_asset(user, 'imageFile')|imagine_filter('users') }}
+                                    {% endif %}
                                 {% endif %}"
                                 
                           alt="">
@@ -79,16 +87,16 @@
                                     {% if app.user.id == user.Id  %}
                                         {{ path('modifier')}}
                                     {% elseif app.user.id != user.Id %}
-
+                                        {{ path('ajouterContactauto',{ 'id':user.id}) }}
                                     {% endif %}
                                 {% elseif app.user is null %}
-
+                                        {{ path('ajouterContactauto',{ 'id':user.id}) }}
                                 {% endif %}"
                             class="ml-auto mr-2 flex cursor-pointer"><img class="ml-auto w-10 p-2"
                             src="{% if app.user is not null  %}
                                     {% if app.user.id == user.Id  %}
                                         {{ asset('build/img/edit.png') }}
-                                    {% elseif pp.user.id != user.Id %}
+                                    {% elseif app.user.id != user.Id %}
                                         {{ asset('build/img/plusNoir.png') }}
                                     {% endif %}
                                 {% elseif app.user is null %}

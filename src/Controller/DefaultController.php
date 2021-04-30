@@ -4,8 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Users;
 use App\Form\loupeType;
+use App\Form\UserEditType;
 use App\Form\UsersType;
 use App\Repository\ContactsRepository;
+use App\Repository\UsersRepository;
+use DateTime;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,6 +44,7 @@ class DefaultController extends AbstractController
 
             $pass=$encode->encodePassword($user,$user->getPassword());
             $user->setPassword($pass);
+            $user->setUpdateAt(new DateTime('now'));
 
             $token=$tokenGenerator->generateToken();
             $user->setActivationToken($token);
@@ -49,7 +54,7 @@ class DefaultController extends AbstractController
 
             $message = (new \Swift_Message('Hello Email'))
             ->setFrom('send@example.com')
-            ->setTo('recipient@example.com')
+            ->setTo($user->getEmail())
             ->setBody(
                 $this->renderView(
                     // templates/emails/registration.html.twig
@@ -60,11 +65,43 @@ class DefaultController extends AbstractController
             );
 
             $mailer->send($message);
-            return $this->redirectToRoute('app_login');
+            return $this->redirectToRoute('modifier');
         }
         return $this->render('default/inscription.html.twig', [
             'controller_name' => 'DefaultController',
             'form'=> $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/modifier", name="modifier")
+     */
+    public function modifier(Request $request, EntityManagerInterface $em, UsersRepository $usersRepo): Response
+    {
+        $user= $usersRepo->findOneBy(['id' => $this->getUser()->getId()]);
+        if( $user->getActivationToken() != null ){
+            $activer=false;
+        }if( $user->getActivationToken() == null ){
+            $activer=true;
+        }
+        
+
+        $editform = $this->createForm(UserEditType::class,$user);
+
+        $editform->handleRequest($request);
+
+        if($editform->isSubmitted() && $editform->isValid()){
+            $user->setUpdateAt(new DateTime('now'));
+            
+            $em->persist($user);
+            $em->flush();
+
+            return $this->redirectToRoute('profile',['id' => $this->getUser()->getId()]);
+        }
+
+        return $this->render('users/EditUsers.html.twig', [
+            'editform' => $editform->createView(),
+            'activer'=> $activer
         ]);
     }
 

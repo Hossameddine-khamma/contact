@@ -9,7 +9,7 @@ liip_imagine:
             filters:
                 fixed:
                     width: 356
-                    height: 537
+                    height: 515
         users:
             filters:
                 fixed:

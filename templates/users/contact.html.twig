@@ -61,9 +61,8 @@
                   <!-- About Section -->
                   <div class="bg-white p-3 shadow-sm rounded-sm">
                       <div class="flex items-center justify-center font-semibold bg-red-500 text-gray-900 leading-8 border-2 border-b-0 border-gray-700">
-                          <a id="QR" class="mr-auto ml-2 flex cursor-pointer"><img class="mr-auto w-10 p-2" src="{{ asset('build/img/QR.png') }}"></a>
-                          <div class="flex justify-center">
-                          <span class=" mt-1 mr-2">
+                          <div class="ml-auto flex justify-center">
+                          <span class="mt-1 mr-2">
                               <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                   stroke="currentColor">
                                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -72,7 +71,7 @@
                           </span>
                           <span class="tracking-wide">About</span>
                           </div>
-                          <a href="{{ path('modifier')}}"
+                          <a href="{{ path('contactModifier',{'id':contact.id})}}"
                             class="ml-auto mr-2 flex cursor-pointer">
                             <img class="ml-auto w-10 p-2" src="{{ asset('build/img/edit.png') }}"alt="">
                             </a>

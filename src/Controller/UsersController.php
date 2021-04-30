@@ -79,6 +79,7 @@ class UsersController extends AbstractController
         if($form->isSubmitted() && $form->isValid()){
             $em=$this->getDoctrine()->getManager();
             $contact->setUser($this->getUser());
+            $contact->setUpdateAt(new \DateTime('now'));
             $em->persist($contact);
             $em->flush();
 
@@ -86,33 +87,44 @@ class UsersController extends AbstractController
         }
         return $this->render('users/AjouterContact.html.twig', [
             'contactform' => $form->createView(),
+            'title'=>'veuillez ajouter votre contact'
         ]);
     }
 
     /**
-     * @Route("/modifier", name="modifier")
+     * @Route("/ajouter/{id}", name="ajouterContactauto")
      */
-    public function modifier(Request $request, EntityManagerInterface $em, UsersRepository $usersRepo): Response
+    public function ajouterContactauto($id, Request $request, UsersRepository $UsersRepo): Response
     {
-        $user= $usersRepo->findOneBy(['id' => $this->getUser()->getId()]);
+        $oldContact=$UsersRepo->findOneBy(['id'=>$id]);
+        $contact=new Contacts();
 
-        $editform = $this->createForm(UserEditType::class,$user);
+        $contact->setDate(new DateTime());
+        $contact->setNom($oldContact->getNom());
+        $contact->setPrenom($oldContact->getPrenom());
+        $contact->setMetier($oldContact->getMetier());
+        $contact->setTelephone($oldContact->getTelephone());
+        $contact->setVille($oldContact->getVille());
+        $contact->setMail($oldContact->getEmail());
+        $contact->setTags($oldContact->getTags());
 
-        $editform->handleRequest($request);
+        $form=$this->createForm(ContactType::class,$contact);
 
-        if($editform->isSubmitted() && $editform->isValid()){
-            
-            $em->persist($user);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $em=$this->getDoctrine()->getManager();
+            $contact->setUser($this->getUser());
+            $contact->setUpdateAt(new \DateTime('now'));
+            $em->persist($contact);
             $em->flush();
 
-            return $this->redirectToRoute('profile',['id' => $this->getUser()->getId()]);
+            return $this->redirectToRoute('users');
         }
-
-        return $this->render('users/EditUsers.html.twig', [
-            'editform' => $editform->createView(),
+        return $this->render('users/AjouterContact.html.twig', [
+            'contactform' => $form->createView(),
+            'title'=>'veuillez ajouter votre contact'
         ]);
-
-
     }
 
     /**
@@ -130,5 +142,30 @@ class UsersController extends AbstractController
 
         ]);
 
+    }
+    /**
+     * @Route("/contact/modifier/{id}", name="contactModifier")
+     */
+    public function contactModifier($id, Request $request, EntityManagerInterface $em, ContactsRepository $contactsRepo): Response
+    {
+        $contact=$contactsRepo->findOneBy(['id'=>$id]);
+        
+        $form=$this->createForm(ContactType::class,$contact);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $em=$this->getDoctrine()->getManager();
+            $contact->setUser($this->getUser());
+            $contact->setUpdateAt(new DateTime('now'));
+            $em->persist($contact);
+            $em->flush();
+
+            return $this->redirectToRoute('users');
+        }
+        return $this->render('users/AjouterContact.html.twig', [
+            'contactform' => $form->createView(),
+            'title'=>'veuillez modifier votre contact'
+        ]);
     }
 }

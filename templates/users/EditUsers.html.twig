@@ -39,6 +39,11 @@
               <div class="w-full relative">
                 <div class="mt-6">
                     <h1 id='localisationError' class="text-red-500 font-bold my-4 justify-items-center grid"></h1>
+                    {% if activer == false %}
+                    <h1 id='localisationError' class="text-red-500 font-bold my-4 justify-items-center grid">
+                    Noublier pas d'activer votre compte
+                    </h1>
+                    {% endif %}
                     <h1 class="text-gray-600 font-bold my-4 justify-items-center grid">veuillez Modifier vos information</h1>
                     {{ form(editform) }}
                 </div>
