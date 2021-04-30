@@ -31,38 +31,27 @@
                             <img class="md:ml-2 md:mb-1" src="{{ asset('build/img/plus.png') }}"> <span class="hidden md:grid">Ajouter</span>
                         </button>
                         </a>
-                        <a class="w-10 h-12 mr-auto  items-center flex" href="{{ path('app_logout')}}">
-                        <button class="cursor-pointer w-full md:grid rounded-full p-1 text-white bg-red-500 md:bg-none outline-none focus:outline-none">
-                            <img class="md:ml-2 md:mb-1 md:h-8" src="{{ asset('build/img/user.png') }}"><span class="hidden md:grid">Logout</span>
+                        <a class="w-10 h-12 mr-auto  items-center flex" href="{{ path('profile',{id : app.user.id})}}">
+                        <button class="cursor-pointer w-full md:grid rounded-full p-1 text-white bg-red-500 outline-none focus:outline-none">
+                            <img  src="{{ asset('build/img/user.png') }}"><span class="hidden md:grid">Profil</span>
                         </button>
                         </a>
                     {% endif %}
                 </div>
             </div>
     </div>
-    <div class="md:flex no-wrap mx-4 md:mt-40 z-10">
+    <div class="md:flex no-wrap mx-4 md:mt-14 z-10">
           <!-- Left Side -->
           <div class="w-full md:w-3/12">
               <!-- Profile Card -->
               <div class="bg-white my-3 px-2">
                   <div class=" flex overflow-hidden">
                       <img class="h-auto w-full mx-auto"
-                          src="{% if app.user is null %}
-                                    {% if user.image is null %}
-                                        {{ asset('build/img/profil.jpg')|imagine_filter('users') }}
-                                    {% elseif user.image is not null %}
-                                        {{ vich_uploader_asset(user, 'imageFile')|imagine_filter('users') }}
-                                    {% endif %}
-                                {% elseif app.user is not null %}
-                                    {% if user.image is null %}
-                                        {{ asset('build/img/profil.jpg')|imagine_filter('users') }}
-                                    {% elseif app.user.linkedinId is not null  %}
-                                        {{ user.image|imagine_filter('users') }}
-                                    {% elseif user.image is not null %}
-                                        {{ vich_uploader_asset(user, 'imageFile')|imagine_filter('users') }}
-                                    {% endif %}
+                          src="{% if contact.image is null %}
+                                    {{ asset('build/img/profil.jpg')|imagine_filter('contacts') }}
+                                {% elseif contact.image is not null %}
+                                    {{ vich_uploader_asset(contact, 'imageFile')|imagine_filter('contacts') }}
                                 {% endif %}"
-                                
                           alt="">
                   </div>
               </div>
@@ -72,9 +61,8 @@
                   <!-- About Section -->
                   <div class="bg-white p-3 shadow-sm rounded-sm">
                       <div class="flex items-center justify-center font-semibold bg-red-500 text-gray-900 leading-8 border-2 border-b-0 border-gray-700">
-                          <a id="QR" class="mr-auto ml-2 flex cursor-pointer"><img class="mr-auto w-10 p-2" src="{{ asset('build/img/QR.png') }}"></a>
-                          <div class="flex justify-center">
-                          <span class=" mt-1 mr-2">
+                          <div class="ml-auto flex justify-center">
+                          <span class="mt-1 mr-2">
                               <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                   stroke="currentColor">
                                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -83,62 +71,53 @@
                           </span>
                           <span class="tracking-wide">About</span>
                           </div>
-                          <a href="{% if app.user is not null  %}
-                                    {% if app.user.id == user.Id  %}
-                                        {{ path('modifier')}}
-                                    {% elseif app.user.id != user.Id %}
-                                        {{ path('ajouterContactauto',{ 'id':user.id}) }}
-                                    {% endif %}
-                                {% elseif app.user is null %}
-                                        {{ path('ajouterContactauto',{ 'id':user.id}) }}
-                                {% endif %}"
-                            class="ml-auto mr-2 flex cursor-pointer"><img class="ml-auto w-10 p-2"
-                            src="{% if app.user is not null  %}
-                                    {% if app.user.id == user.Id  %}
-                                        {{ asset('build/img/edit.png') }}
-                                    {% elseif app.user.id != user.Id %}
-                                        {{ asset('build/img/plusNoir.png') }}
-                                    {% endif %}
-                                {% elseif app.user is null %}
-                                    {{ asset('build/img/plusNoir.png') }}
-                                {% endif %}"
-                            alt="">
-                            {% if app.user is not null %}
-                                {% if app.user.id != user.Id %}Ajouter{% endif %}
-                            {% endif %}
-                            {% if app.user is null %}Ajouter{% endif %}
+                          <a href="{{ path('contactModifier',{'id':contact.id})}}"
+                            class="ml-auto mr-2 flex cursor-pointer">
+                            <img class="ml-auto w-10 p-2" src="{{ asset('build/img/edit.png') }}"alt="">
                             </a>
                       </div>
                       <div class="text-gray-700 border-2 border-gray-700">
                           <div class="grid grid-cols-1 md:grid-cols-2 text-sm">
                               <div class="grid grid-cols-2 my-4">
                                   <div class="px-4 py-2 font-semibold">Nom</div>
-                                  <div class="px-4 py-2">{{ user.Nom }}</div>
+                                  <div class="px-4 py-2">{{ contact.Nom }}</div>
                               </div>
                               <div class="grid grid-cols-2 my-6">
                                   <div class="px-4 py-2 font-semibold">Prenom</div>
-                                  <div class="px-4 py-2">{{ user.Prenom }}</div>
+                                  <div class="px-4 py-2">{{ contact.Prenom }}</div>
                               </div>
                               <div class="grid grid-cols-2 my-6">
                                   <div class="px-4 py-2 font-semibold">Metier</div>
-                                  <div class="px-4 py-2">{{ user.Metier }}</div>
+                                  <div class="px-4 py-2">{{ contact.Metier }}</div>
                               </div>
                               <div class="grid grid-cols-2 my-6">
                                   <div class="px-4 py-2 font-semibold">Telephone</div>
-                                  <div class="px-4 py-2">{{ user.Telephone }}</div>
+                                  <div class="px-4 py-2">{{ contact.Telephone }}</div>
                               </div>
                               <div class="grid grid-cols-2 my-6">
                                   <div class="px-4 py-2 font-semibold">ville</div>
-                                  <div class="px-4 py-2">{{ user.ville }}</div>
+                                  <div class="px-4 py-2">{{ contact.ville }}</div>
                               </div>
                               <div class="grid grid-cols-2 my-6">
                                   <div class="px-4 py-2 font-semibold">Mail</div>
-                                  <div class="px-4 py-2">{{ user.email }}</div>
+                                  <div class="px-4 py-2">{{ contact.Mail }}</div>
                               </div>
-                              <div class="grid grid-cols-2 md:col-span-2 my-4 justify-self-start">
+                              <div class="grid grid-cols-2 my-6">
+                                  <div class="px-4 py-2 font-semibold">Météo</div>
+                                  <div class="px-4 py-2">{{ contact.Meteo }}</div>
+                              </div>
+                              <div class="grid grid-cols-2 my-6">
+                                  <div class="px-4 py-2 font-semibold">Date</div>
+                                  <div class="px-4 py-2">{{ contact.Date|date("m/d/Y") }}</div>
+                              </div>
+                              <div class="flex grid-cols-2  md:col-span-2 my-4 justify-self-start">
+                                  <div class="px-4 py-2 font-semibold">News</div>
+                                  <div class="px-4 py-2">{{ contact.News }}</div>
+                              </div>
+                              <div class="flex grid-cols-2 md:col-span-2 my-4 justify-self-start">
                                   <div class="px-4 py-2 font-semibold">Tags</div>
                                   <div class="px-4 py-2">
-                                      {{ user.Tags }}
+                                      {{ contact.Tags }}
                                   </div>
                               </div>
                           </div>
@@ -146,7 +125,7 @@
                   </div>
           </div>
     </div>
-    <div id="QR_BG" class="bg-gray-700 opacity-75 filter blur-3xl h-full z-20 absolute inset-0 hidden">
+    <div id="QR_BG" class="bg-gray-700 opacity-75 filter blur-3xl  h-full z-20 absolute inset-0 hidden">
     </div>
     <div id="qrCode" class="hidden  justify-center  m-4 absolute z-30  inset-y-1/4 inset-x-1/3 ">     
     </div>

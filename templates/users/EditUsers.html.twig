@@ -2,14 +2,14 @@
 
 {% block title %}Ajouter un contact{% endblock %}
 {% block javascripts %}
-            {{ encore_entry_script_tags('contact') }}
+            {{ encore_entry_script_tags('editProfil') }}
 {% endblock %}
 
 {% block body %}
 <div class="w-full flex items-center bg-gray-700">
     <div class="w-full flex justify-end">
         <div class="text-gray-300 w-full sm:w-1/4 m-2 flex justify-between">
-          <a class="w-10 h-12  sm:mr-4 sm:ml-auto items-center flex " href="{{path('ajouterContact')}}">
+          <a class="w-10 h-12  sm:mr-4 sm:ml-auto items-center flex " href="{{path('users')}}">
             <button class="cursor-pointer w-full rounded-full p-1  text-white bg-red-500 outline-none focus:outline-none">
                 <img src="{{ asset('build/img/home.png') }}">
             </button>
@@ -39,6 +39,11 @@
               <div class="w-full relative">
                 <div class="mt-6">
                     <h1 id='localisationError' class="text-red-500 font-bold my-4 justify-items-center grid"></h1>
+                    {% if activer == false %}
+                    <h1 id='localisationError' class="text-red-500 font-bold my-4 justify-items-center grid">
+                    Noublier pas d'activer votre compte
+                    </h1>
+                    {% endif %}
                     <h1 class="text-gray-600 font-bold my-4 justify-items-center grid">veuillez Modifier vos information</h1>
                     {{ form(editform) }}
                 </div>

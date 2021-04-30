@@ -17,32 +17,6 @@ $(document).ready(()=>{
         lang:'fr'
     }
 
-    const settings = {
-        "async": true,
-        "crossDomain": true,
-        "url": "https://google-news.p.rapidapi.com/v1/top_headlines?lang=fr",
-        "method": "GET",
-        "headers": {
-            "x-rapidapi-key": "7f3796d181msh460c9d9b6c4f345p18a850jsneb544ee86af7",
-            "x-rapidapi-host": "google-news.p.rapidapi.com"
-        }
-    };
-    
-    $.ajax(settings).done(function (response) {
-        
-        let articles=response.articles;
-        let titles = new Array()
-
-        articles.forEach(article => {
-            titles.push(article.title)
-        });
-
-        titles.forEach(title=>{
-
-            $('#contact_News').append(`<option class="w-1/2" value="${title}">${title}</option>`)
-        })
-    });
-
     navigator.geolocation.getCurrentPosition(position =>{
         $.get(`https://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${config.api}&units=metric&lang=fr`).then((data)=>{
             
@@ -64,6 +38,57 @@ $(document).ready(()=>{
             $('#localisationError').empty()
             $('#localisationError').append( 'veillez autoriser la geolocation sur votre navigateur');
     })
+
+
+
+
+    
+    $('<div class="mb-6">'
+        +'<div class="md:w-full px-3 mb-6 md:mb-0">'
+            +'<label class="uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 required">news</label>'
+                +'<select id="nws" class=" block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3 focus:outline-none" >'
+                +'</select>'
+        +'</div>'
+    +'</div>').insertBefore( $('#contact').children()[9])
+
+    const settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": "https://google-news.p.rapidapi.com/v1/top_headlines?lang=fr",
+        "method": "GET",
+        "headers": {
+            "x-rapidapi-key": "7f3796d181msh460c9d9b6c4f345p18a850jsneb544ee86af7",
+            "x-rapidapi-host": "google-news.p.rapidapi.com"
+        }
+    };
+
+    $.ajax(settings).done(function (response) {
+        
+        let articles=response.articles;
+        let titles = new Array()
+
+        articles.forEach(article => {
+            titles.push(article.title)
+        });
+
+        titles.forEach(title=>{
+            $('#nws').append('<option value="'+title+'">'+title+'</option>')
+        })
+    });
+
+    $("#nws").select2({
+        tags: true,
+        width: 'resolve'
+      });
+    
+    $("#contact_Enregistrer").click(()=>{
+        $('#contact_News').val($('#nws option:selected').val())
+    })
+        
+    
+    
+
+    
 
 });
 

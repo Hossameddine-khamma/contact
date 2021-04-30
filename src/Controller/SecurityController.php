@@ -61,7 +61,7 @@ class SecurityController extends AbstractController
             throw $this->createNotFoundException('cet utilisateur n\'exicte pas');
         }
         $user->setActivationToken(null);
-        
+        $user->setRoles(['ROLE_confirmed']);
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($user);
         $entityManager->flush();
